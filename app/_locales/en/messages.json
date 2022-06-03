@@ -14,6 +14,9 @@
   "QRHardwareSignRequestCancel": {
     "message": "Reject"
   },
+  "unknownCollection": {
+    "message": "Unknown Collection"
+  },
   "QRHardwareSignRequestDescription": {
     "message": "After you’ve signed with your wallet, click on 'Get Signature' to receive the signature"
   },

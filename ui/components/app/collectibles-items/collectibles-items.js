@@ -28,6 +28,7 @@ import { getAssetImageURL } from '../../../helpers/utils/util';
 import { updateCollectibleDropDownState } from '../../../store/actions';
 import { usePrevious } from '../../../hooks/usePrevious';
 import { getCollectiblesDropdownState } from '../../../ducks/metamask/metamask';
+import { useI18nContext } from '../../../hooks/useI18nContext';
 
 const width =
   getEnvironmentType() === ENVIRONMENT_TYPE_POPUP
@@ -46,6 +47,7 @@ export default function CollectiblesItems({
   const previousCollectionKeys = usePrevious(collectionsKeys);
   const selectedAddress = useSelector(getSelectedAddress);
   const chainId = useSelector(getCurrentChainId);
+  const t = useI18nContext();
 
   useEffect(() => {
     if (
@@ -101,7 +103,7 @@ export default function CollectiblesItems({
     }
     return (
       <div className="collectibles-items__collection-image-alt">
-        {collectionName[0]}
+        {collectionName?.[0]}
       </div>
     );
   };
@@ -164,7 +166,7 @@ export default function CollectiblesItems({
                 variant={TYPOGRAPHY.H5}
                 margin={[0, 0, 0, 2]}
               >
-                {`${collectionName} (${collectibles.length})`}
+                {`${collectionName ?? t('unknownCollection')} (${collectibles.length})`}
               </Typography>
             </Box>
             <Box alignItems={ALIGN_ITEMS.FLEX_END}>
@@ -195,13 +197,16 @@ export default function CollectiblesItems({
                         backgroundColor,
                       }}
                     >
+                      {
+                      collectibleImage ?
                       <img
                         onClick={() =>
                           history.push(`${ASSET_ROUTE}/${address}/${tokenId}`)
                         }
                         className="collectibles-items__collection-item-image"
                         src={collectibleImage}
-                      />
+                      /> : 
+                      }
                     </div>
                   </Card>
                 </Box>

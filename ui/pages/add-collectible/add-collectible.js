@@ -4,7 +4,6 @@ import { useDispatch, useSelector } from 'react-redux';
 import { util } from '@metamask/controllers';
 import { useI18nContext } from '../../hooks/useI18nContext';
 import { DEFAULT_ROUTE } from '../../helpers/constants/routes';
-import { BN } from 'ethereumjs-util';
 import {
   DISPLAY,
   FONT_WEIGHT,

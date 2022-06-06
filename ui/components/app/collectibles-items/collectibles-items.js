@@ -103,7 +103,7 @@ export default function CollectiblesItems({
     }
     return (
       <div className="collectibles-items__collection-image-alt">
-        {collectionName?.[0]}
+        {collectionName?.[0] ?? '?'}
       </div>
     );
   };

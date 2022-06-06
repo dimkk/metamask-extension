@@ -14,9 +14,6 @@
   "QRHardwareSignRequestCancel": {
     "message": "Reject"
   },
-  "unknownCollection": {
-    "message": "Unknown Collection"
-  },
   "QRHardwareSignRequestDescription": {
     "message": "After you’ve signed with your wallet, click on 'Get Signature' to receive the signature"
   },
@@ -3863,6 +3860,9 @@
   },
   "unknownCameraErrorTitle": {
     "message": "Ooops! Something went wrong...."
+  },
+  "unknownCollection": {
+    "message": "Unknown Collection"
   },
   "unknownNetwork": {
     "message": "Unknown Private Network"

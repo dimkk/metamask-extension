@@ -28,6 +28,7 @@
       text-align: center;
     }
   }
+
   &__item-wrapper {
     align-self: center;
   }
@@ -52,6 +53,7 @@
     width: 100%;
     height: 100%;
     cursor: pointer;
+
     &-default {
       background-color: var(--color-overlay-alternative);
     }

@@ -1,4 +1,5 @@
 import React, { useEffect } from 'react';
+import classnames from 'classnames';
 import PropTypes from 'prop-types';
 import { useDispatch, useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
@@ -166,7 +167,9 @@ export default function CollectiblesItems({
                 variant={TYPOGRAPHY.H5}
                 margin={[0, 0, 0, 2]}
               >
-                {`${collectionName ?? t('unknownCollection')} (${collectibles.length})`}
+                {`${collectionName ?? t('unknownCollection')} (${
+                  collectibles.length
+                })`}
               </Typography>
             </Box>
             <Box alignItems={ALIGN_ITEMS.FLEX_END}>
@@ -188,26 +191,37 @@ export default function CollectiblesItems({
                 <Box
                   width={width}
                   key={`collectible-${i}`}
-                  className="collectibles-items__collection-item-wrapper"
+                  className="collectibles-items__item-wrapper"
                 >
-                  <Card padding={0} justifyContent={JUSTIFY_CONTENT.CENTER}>
-                    <div
-                      className="collectibles-items__collection-item"
-                      style={{
-                        backgroundColor,
-                      }}
-                    >
-                      {
-                      collectibleImage ?
-                      <img
+                  <Card
+                    className={classnames({
+                      'collectibles-items__item-card-empty': !collectibleImage,
+                    })}
+                    justifyContent={JUSTIFY_CONTENT.CENTER}
+                  >
+                    {collectibleImage ? (
+                      <div
+                        className="collectibles-items__item"
+                        style={{
+                          backgroundColor,
+                        }}
+                      >
+                        <img
+                          onClick={() =>
+                            history.push(`${ASSET_ROUTE}/${address}/${tokenId}`)
+                          }
+                          className="collectibles-items__item-image"
+                          src={collectibleImage}
+                        />
+                      </div>
+                    ) : (
+                      <div
+                        className="collectibles-items__item-image-default"
                         onClick={() =>
                           history.push(`${ASSET_ROUTE}/${address}/${tokenId}`)
                         }
-                        className="collectibles-items__collection-item-image"
-                        src={collectibleImage}
-                      /> : 
-                      }
-                    </div>
+                      />
+                    )}
                   </Card>
                 </Box>
               );

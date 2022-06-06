@@ -1,5 +1,4 @@
 const { strict: assert } = require('assert');
-const { delay } = require('lodash');
 const { convertToHexValue, withFixtures, largeDelayMs } = require('../helpers');
 const ThreeboxMockServer = require('../mock-3box/threebox-mock-server');
 
@@ -91,10 +90,9 @@ describe('Threebox', function () {
         const jazzElement = await driver.findElement(
           '.settings-page__content-item__identicon__item__icon--active',
         );
-       
-        const jazzElementCss = await jazzElement.getCssValue('border');
 
-        assert.equal(jazzElementCss, '2px solid rgb(3, 125, 214)');
+        const jazzElementCss = await jazzElement.getCssValue('border');
+        assert.equal(await jazzElementCss, '2px solid rgb(3, 125, 214)');
         const jazziconText = await driver.findElement({
           tag: 'h6',
           text: 'Jazzicons',

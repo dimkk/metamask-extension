@@ -1672,6 +1672,9 @@ export default class MetamaskController extends EventEmitter {
       updateCollectibleDropDownState: appStateController.updateCollectibleDropDownState.bind(
         appStateController,
       ),
+      setCustomNetworkListEnabled: appStateController.setCustomNetworkListEnabled.bind(
+        appStateController,
+      ),
       // EnsController
       tryReverseResolveAddress: ensController.reverseResolveAddress.bind(
         ensController,
@@ -2022,12 +2025,8 @@ export default class MetamaskController extends EventEmitter {
     }
   }
 
-  async requestUserApproval(customRpc) {
-    const requestUserApproval = await this.approvalController.addAndShowApprovalRequest.bind(
-      this.approvalController,
-    );
-
-    await requestUserApproval({
+  requestUserApproval(customRpc) {
+    this.approvalController.addAndShowApprovalRequest({
       origin: 'metamask',
       type: 'wallet_addEthereumChain',
       requestData: {

@@ -241,7 +241,7 @@ describe('DetectTokensController', function () {
         ),
       );
 
-    await tokensController.ignoreTokens(tokenAddressToSkip);
+    await tokensController.ignoreTokens([tokenAddressToSkip]);
     await controller.detectNewTokens();
 
     assert.deepEqual(tokensController.state.tokens, [
@@ -249,7 +249,8 @@ describe('DetectTokensController', function () {
         address: toChecksumHexAddress(existingTokenAddress),
         decimals: existingToken.decimals,
         symbol: existingToken.symbol,
-        image: undefined,
+        aggregators: [],
+        image: `https://static.metaswap.codefi.network/api/v1/tokenIcons/1/0xc011a73ee8576fb46f5e1c5751ca3b9fe0af2a6f.png`,
         isERC721: false,
       },
     ]);

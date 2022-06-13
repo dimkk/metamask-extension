@@ -8,11 +8,18 @@ import {
   TokenListController,
   TokensController,
 } from '@metamask/controllers';
-import { MAINNET, ROPSTEN } from '../../../shared/constants/network';
+import {
+  MAINNET,
+  MAINNET_NETWORK_ID,
+  ROPSTEN,
+} from '../../../shared/constants/network';
 import { toChecksumHexAddress } from '../../../shared/modules/hexstring-utils';
 import DetectTokensController from './detect-tokens';
 import NetworkController from './network';
 import PreferencesController from './preferences';
+
+const tokenIconsApiBaseUrl =
+  'https://static.metaswap.codefi.network/api/v1/tokenIcons';
 
 describe('DetectTokensController', function () {
   let tokenListController;
@@ -250,7 +257,7 @@ describe('DetectTokensController', function () {
         decimals: existingToken.decimals,
         symbol: existingToken.symbol,
         aggregators: [],
-        image: `https://static.metaswap.codefi.network/api/v1/tokenIcons/1/0xc011a73ee8576fb46f5e1c5751ca3b9fe0af2a6f.png`,
+        image: `${tokenIconsApiBaseUrl}/${MAINNET_NETWORK_ID}/${existingTokenAddress}.png`,
         isERC721: false,
       },
     ]);
@@ -304,14 +311,16 @@ describe('DetectTokensController', function () {
         decimals: existingToken.decimals,
         symbol: existingToken.symbol,
         isERC721: false,
-        image: undefined,
+        aggregators: [],
+        image: `${tokenIconsApiBaseUrl}/${MAINNET_NETWORK_ID}/${existingTokenAddress}.png`,
       },
       {
         address: toChecksumHexAddress(tokenAddressToAdd),
         decimals: tokenToAdd.decimals,
         symbol: tokenToAdd.symbol,
-        image: undefined,
         isERC721: false,
+        aggregators: [],
+        image: `${tokenIconsApiBaseUrl}/${MAINNET_NETWORK_ID}/${tokenAddressToAdd}.png`,
       },
     ]);
   });
@@ -364,15 +373,17 @@ describe('DetectTokensController', function () {
         address: toChecksumHexAddress(existingTokenAddress),
         decimals: existingToken.decimals,
         symbol: existingToken.symbol,
-        image: undefined,
+        image: `${tokenIconsApiBaseUrl}/${MAINNET_NETWORK_ID}/${existingTokenAddress}.png`,
         isERC721: false,
+        aggregators: [],
       },
       {
         address: toChecksumHexAddress(tokenAddressToAdd),
         decimals: tokenToAdd.decimals,
         symbol: tokenToAdd.symbol,
-        image: undefined,
+        image: `${tokenIconsApiBaseUrl}/${MAINNET_NETWORK_ID}/${tokenAddressToAdd}.png`,
         isERC721: false,
+        aggregators: [],
       },
     ]);
   });

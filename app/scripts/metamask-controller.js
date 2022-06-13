@@ -247,25 +247,27 @@ export default class MetamaskController extends EventEmitter {
       state: initState.TokensController,
     });
 
-    this.assetsContractController = new AssetsContractController({
-      onPreferencesStateChange: (listener) =>
-        this.preferencesController.store.subscribe(listener),
-      onNetworkStateChange: (cb) =>
-        this.networkController.store.subscribe((networkState) => {
-          const modifiedNetworkState = {
-            ...networkState,
-            provider: {
-              ...networkState.provider,
-              chainId: hexToDecimal(networkState.provider.chainId),
-            },
-          };
-          return cb(modifiedNetworkState);
-        }),
-      config: {
+    this.assetsContractController = new AssetsContractController(
+      {
+        onPreferencesStateChange: (listener) =>
+          this.preferencesController.store.subscribe(listener),
+        onNetworkStateChange: (cb) =>
+          this.networkController.store.subscribe((networkState) => {
+            const modifiedNetworkState = {
+              ...networkState,
+              provider: {
+                ...networkState.provider,
+                chainId: hexToDecimal(networkState.provider.chainId),
+              },
+            };
+            return cb(modifiedNetworkState);
+          }),
+      },
+      {
         provider: this.provider,
       },
-      state: initState.AssetsContractController,
-    });
+      initState.AssetsContractController,
+    );
 
     this.collectiblesController = new CollectiblesController(
       {

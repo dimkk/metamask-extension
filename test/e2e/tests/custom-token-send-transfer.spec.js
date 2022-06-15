@@ -56,11 +56,11 @@ describe('Send token from inside MetaMask', function () {
 
         await driver.switchToWindow(windowHandles.extension);
 
-        const assets = await driver.waitForSelector({
+        const asset = await driver.waitForSelector({
           css: '.list-item',
           text: '10 TST',
         });
-        assets.click();
+        asset.click();
 
         await driver.waitForSelector('[data-testid="eth-overview-send"]');
         await driver.clickElement('[data-testid="eth-overview-send"]');
@@ -94,7 +94,7 @@ describe('Send token from inside MetaMask', function () {
         );
 
         const tokenAmountText = await tokenAmount.getText();
-        assert.equal(tokenAmountText, '1 TST');
+        assert.equal(tokenAmountText, '1 TST', 'Token amount is not correct');
 
         const confirmDataDiv = await driver.findElement(
           '.confirm-page-container-content__data-box',
@@ -123,10 +123,15 @@ describe('Send token from inside MetaMask', function () {
           },
           { timeout: 10000 },
         );
-        await driver.waitForSelector({
+        const transactionTxt = await driver.waitForSelector({
           css: '.list-item__heading',
           text: 'Send TST',
         });
+        await assert(
+          transactionTxt.getText(),
+          'Send TST',
+          'Transaction is not done correctly',
+        );
       },
     );
   });
@@ -261,6 +266,8 @@ describe('Send a custom token from dapp', function () {
         await driver.switchToWindow(windowHandles.dapp);
 
         await driver.clickElement({ text: 'Transfer Tokens', tag: 'button' });
+        await driver.delay(4000);
+
         windowHandles = await getWindowHandles(driver, 3);
         await driver.switchToWindow(windowHandles.popup);
 
@@ -309,14 +316,14 @@ describe('Send a custom token from dapp', function () {
           tag: 'button',
         });
 
-        const assetText = (
-          await driver.waitForSelector({
-            css: '.asset-list-item__token-button',
-            text: '8.5 TST',
-          })
-        ).getAttribute('title');
-
-        assert.equal(await assetText, '8.5 TST', 'Token amount is not correct');
+        const assets = await driver.findElement(
+          '.asset-list-item__token-button',
+        );
+        assert.equal(
+          await assets.getAttribute('title'),
+          '8.5 TST',
+          'Token amount is not correct',
+        );
       },
     );
   });
@@ -332,7 +339,7 @@ describe('Transfers a custom token from dapp when no gas value is specified', fu
       },
     ],
   };
-  it('transfers an already created token, without specifying gas, submits the transaction, finds the transaction in the transactions list', async function () {
+  it('transfers an already created token without specifying gas, submits the transaction, finds the transaction in the transactions list', async function () {
     await withFixtures(
       {
         dapp: true,
@@ -377,9 +384,11 @@ describe('Transfers a custom token from dapp when no gas value is specified', fu
           text: 'Transfer Tokens Without Gas',
           tag: 'button',
         });
+        await driver.delay(4000);
+
         windowHandles = await getWindowHandles(driver, 3);
+
         await driver.switchToWindow(windowHandles.popup);
-        await driver.delay(3000);
         await driver.clickElement({ text: 'Confirm', tag: 'button' });
         await driver.switchToWindow(windowHandles.extension);
         await driver.clickElement({ tag: 'button', text: 'Activity' });
@@ -394,9 +403,8 @@ describe('Transfers a custom token from dapp when no gas value is specified', fu
           css: '.transaction-list-item__primary-currency',
           text: '-1.5 TST',
         });
-        await driver.clickElement('.transaction-list-item');
 
-        await driver.waitForSelector({
+        const transactionTxt = await driver.waitForSelector({
           // Select the heading of the first transaction list item in the
           // completed transaction list with text matching Send TST
           css:
@@ -409,19 +417,26 @@ describe('Transfers a custom token from dapp when no gas value is specified', fu
             '.transaction-list__completed-transactions .transaction-list-item:first-child .transaction-list-item__primary-currency',
           text: '-1.5 TST',
         });
+
+        await assert(
+          transactionTxt.getText(),
+          'Send TST',
+          'Transaction is not done correctly',
+        );
+
         await driver.clickElement({
           text: 'Assets',
           tag: 'button',
         });
 
-        const assetText = (
-          await driver.findElement({
-            css: '.asset-list-item__token-button',
-            text: '8.5 TST',
-          })
-        ).getAttribute('title');
-
-        assert.equal(await assetText, '8.5 TST', 'Token amount is not correct');
+        const assets = await driver.findElements(
+          '.asset-list-item__token-button',
+        );
+        assert.equal(
+          await assets[1].getAttribute('title'),
+          '8.5 TST',
+          'Token amount is not correct',
+        );
       },
     );
   });

@@ -3242,12 +3242,12 @@
         "@metamask/contract-metadata": true,
         "@metamask/controllers>abort-controller": true,
         "@metamask/controllers>async-mutex": true,
+        "@metamask/controllers>eth-phishing-detect": true,
         "@metamask/controllers>isomorphic-fetch": true,
         "@metamask/controllers>multiformats": true,
         "@metamask/controllers>web3-provider-engine": true,
         "@metamask/metamask-eth-abis": true,
         "@metamask/rpc-methods>@metamask/controllers>eth-method-registry": true,
-        "@metamask/rpc-methods>@metamask/controllers>eth-phishing-detect": true,
         "@metamask/rpc-methods>@metamask/controllers>ethereumjs-wallet": true,
         "@metamask/rpc-methods>@metamask/controllers>nanoid": true,
         "@storybook/api>fast-deep-equal": true,
@@ -3336,11 +3336,6 @@
     "@metamask/rpc-methods>@metamask/controllers>eth-method-registry>ethjs>js-sha3": {
       "packages": {
         "browserify>process": true
-      }
-    },
-    "@metamask/rpc-methods>@metamask/controllers>eth-phishing-detect": {
-      "packages": {
-        "eslint>optionator>fast-levenshtein": true
       }
     },
     "@metamask/rpc-methods>@metamask/controllers>ethereumjs-wallet": {
@@ -3449,12 +3444,12 @@
         "@metamask/contract-metadata": true,
         "@metamask/controllers>abort-controller": true,
         "@metamask/controllers>async-mutex": true,
+        "@metamask/controllers>eth-phishing-detect": true,
         "@metamask/controllers>isomorphic-fetch": true,
         "@metamask/controllers>multiformats": true,
         "@metamask/controllers>web3-provider-engine": true,
         "@metamask/metamask-eth-abis": true,
         "@metamask/smart-transactions-controller>@metamask/controllers>eth-method-registry": true,
-        "@metamask/smart-transactions-controller>@metamask/controllers>eth-phishing-detect": true,
         "@metamask/smart-transactions-controller>@metamask/controllers>ethereumjs-wallet": true,
         "@metamask/smart-transactions-controller>@metamask/controllers>nanoid": true,
         "@storybook/api>fast-deep-equal": true,
@@ -3543,11 +3538,6 @@
     "@metamask/smart-transactions-controller>@metamask/controllers>eth-method-registry>ethjs>js-sha3": {
       "packages": {
         "browserify>process": true
-      }
-    },
-    "@metamask/smart-transactions-controller>@metamask/controllers>eth-phishing-detect": {
-      "packages": {
-        "eslint>optionator>fast-levenshtein": true
       }
     },
     "@metamask/smart-transactions-controller>@metamask/controllers>ethereumjs-wallet": {
@@ -3646,12 +3636,12 @@
         "@metamask/contract-metadata": true,
         "@metamask/controllers>abort-controller": true,
         "@metamask/controllers>async-mutex": true,
+        "@metamask/controllers>eth-phishing-detect": true,
         "@metamask/controllers>isomorphic-fetch": true,
         "@metamask/controllers>multiformats": true,
         "@metamask/controllers>web3-provider-engine": true,
         "@metamask/metamask-eth-abis": true,
         "@metamask/snap-controllers>@metamask/controllers>eth-method-registry": true,
-        "@metamask/snap-controllers>@metamask/controllers>eth-phishing-detect": true,
         "@metamask/snap-controllers>@metamask/controllers>ethereumjs-wallet": true,
         "@metamask/snap-controllers>nanoid": true,
         "@storybook/api>fast-deep-equal": true,
@@ -3740,11 +3730,6 @@
     "@metamask/snap-controllers>@metamask/controllers>eth-method-registry>ethjs>js-sha3": {
       "packages": {
         "browserify>process": true
-      }
-    },
-    "@metamask/snap-controllers>@metamask/controllers>eth-phishing-detect": {
-      "packages": {
-        "eslint>optionator>fast-levenshtein": true
       }
     },
     "@metamask/snap-controllers>@metamask/controllers>ethereumjs-wallet": {

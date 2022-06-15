@@ -1556,7 +1556,6 @@ export default class MetamaskController extends EventEmitter {
         tokensController,
       ),
       updateTokenType: tokensController.updateTokenType.bind(tokensController),
-      removeToken: tokensController.ignoreTokens.bind(tokensController),
       setAccountLabel: preferencesController.setAccountLabel.bind(
         preferencesController,
       ),
@@ -1928,20 +1927,16 @@ export default class MetamaskController extends EventEmitter {
         : null,
 
       /** Token Detection V2 */
-      addDetectedTokens: process.env.TOKEN_DETECTION_V2
-        ? tokensController.addDetectedTokens.bind(tokensController)
-        : null,
+      addDetectedTokens: tokensController.addDetectedTokens.bind(
+        tokensController,
+      ),
       importTokens: process.env.TOKEN_DETECTION_V2
         ? tokensController.importTokens.bind(tokensController)
         : null,
-      ignoreTokens: process.env.TOKEN_DETECTION_V2
-        ? tokensController.ignoreTokens.bind(tokensController)
-        : null,
-      getBalancesInSingleCall: process.env.TOKEN_DETECTION_V2
-        ? assetsContractController.getBalancesInSingleCall.bind(
-            assetsContractController,
-          )
-        : null,
+      ignoreTokens: tokensController.ignoreTokens.bind(tokensController),
+      getBalancesInSingleCall: assetsContractController.getBalancesInSingleCall.bind(
+        assetsContractController,
+      ),
     };
   }
 

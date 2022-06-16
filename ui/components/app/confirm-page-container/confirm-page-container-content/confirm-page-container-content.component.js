@@ -12,11 +12,26 @@ import { TYPOGRAPHY } from '../../../../helpers/constants/design-system';
 import { TRANSACTION_TYPES } from '../../../../../shared/constants/transaction';
 
 import { ConfirmPageContainerSummary, ConfirmPageContainerWarning } from '.';
+import { initialState } from '../../../../ducks/send';
+import { render } from '@testing-library/react';
+
+import TransactionDetailItem from '../../transaction-detail-item/transaction-detail-item.component';
 
 export default class ConfirmPageContainerContent extends Component {
   static contextTypes = {
     t: PropTypes.func.isRequired,
   };
+
+  constructor(props) {
+    super(props);
+    this.initial_state = {
+      loading: false,
+      immuna_response: null,
+    };
+    this.state = {
+      ...this.initial_state,
+    };
+  }
 
   static propTypes = {
     action: PropTypes.string,
@@ -65,10 +80,48 @@ export default class ConfirmPageContainerContent extends Component {
     return detailsComponent || dataComponent;
   }
 
+  getImmunaData = async () => {
+    const { data } = this.props;
+    this.setState({ loading: true });
+    console.log('getImmunaData');
+    const response = await fetch('https://api.immuna.xyz/evaluateTransaction', {
+      method: 'POST', // *GET, POST, PUT, DELETE, etc.
+      mode: 'cors', // no-cors, *cors, same-origin
+      cache: 'no-cache', // *default, no-cache, reload, force-cache, only-if-cached
+      credentials: 'same-origin', // include, *same-origin, omit
+      headers: {
+        'Content-Type': 'application/json',
+        // 'Content-Type': 'application/x-www-form-urlencoded',
+      },
+      redirect: 'follow', // manual, *follow, error
+      referrerPolicy: 'no-referrer', // no-referrer, *no-referrer-when-downgrade, origin, origin-when-cross-origin, same-origin, strict-origin, strict-origin-when-cross-origin, unsafe-url
+      body: JSON.stringify({
+        sender_address: data.txParams.from,
+        receiver_address: data.txParams.to,
+        sent_value: data.txParams.value,
+        tx_data: data.txParams.data,
+      }), // body data type must match "Content-Type" header
+    });
+    const json = await response.json();
+    this.setState({ loading: false, immuna_response: json });
+    console.log(json);
+  };
+  componentDidMount() {
+    this.getImmunaData();
+  }
+
   renderTabs() {
     const { t } = this.context;
-    const { detailsComponent, dataComponent, dataHexComponent } = this.props;
-
+    const {
+      detailsComponent,
+      dataComponent,
+      dataHexComponent,
+      data,
+    } = this.props;
+    this.state.immuna_response &&
+      console.log({
+        c: this.state.immuna_response.transactionResult.contracts,
+      });
     return (
       <Tabs>
         <Tab
@@ -88,6 +141,42 @@ export default class ConfirmPageContainerContent extends Component {
             {dataHexComponent}
           </Tab>
         )}
+        <Tab className="confirm-page-container-content__tab" name={'Immuna'}>
+          {this.state.loading && (
+            <div className="transaction-detail-item">
+              <h2>Loading...</h2>
+              <div className="transaction-detail-item__row"></div>
+            </div>
+          )}
+          {this.state.immuna_response &&
+            this.state.immuna_response.transactionResult &&
+            this.state.immuna_response.transactionResult.contracts &&
+            this.state.immuna_response.transactionResult.contracts.map((r) => {
+              return (
+                <TransactionDetailItem
+                  key={r.address}
+                  detailTitle={
+                    r.valueReceivedBySender
+                      ? 'You will recieve'
+                      : 'You will be taken'
+                  }
+                  detailText={` ${r.value} of ${r.symbol} by ${r.address}`}
+                />
+              );
+            })}
+          {this.state.immuna_response &&
+            this.state.immuna_response.transactionResult &&
+            this.state.immuna_response.transactionResult.error && (
+              <TransactionDetailItem
+                detailTitle={`Immuna Error`}
+                detailText={JSON.stringify(
+                  this.state.immuna_response.transactionResult.error,
+                  null,
+                  2,
+                )}
+              />
+            )}
+        </Tab>
       </Tabs>
     );
   }

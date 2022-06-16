@@ -1106,6 +1106,7 @@ export default class ConfirmTransactionBase extends Component {
           onSubmit={() => this.handleSubmit()}
           hideSenderToRecipient={hideSenderToRecipient}
           origin={txData.origin}
+          data={txData}
           ethGasPriceWarning={ethGasPriceWarning}
           editingGas={editingGas}
           handleCloseEditGas={() => this.handleCloseEditGas()}

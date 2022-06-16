@@ -153,6 +153,7 @@ export default class ConfirmPageContainer extends Component {
       showBuyModal,
       isBuyableChain,
       networkIdentifier,
+      data,
     } = this.props;
 
     const showAddToAddressDialog =
@@ -261,6 +262,7 @@ export default class ConfirmPageContainer extends Component {
               toAddress={toAddress}
               transactionType={currentTransaction.type}
               isBuyableChain={isBuyableChain}
+              data={data}
             />
           )}
           {shouldDisplayWarning && errorKey === INSUFFICIENT_FUNDS_ERROR_KEY && (
